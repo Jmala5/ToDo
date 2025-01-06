@@ -43,7 +43,7 @@ const SignUp = () => {
         // Automatically log the user in after successful signup
         const loginResponse = await axios.post('http://localhost:5000/login', { email, password });
         localStorage.setItem('token', loginResponse.data.token);
-        navigate('/MainPage');
+        navigate('/ToDoList');
       } else {
         console.error('Greška:', response.data.error);
         setGeneralError(response.data.error);
