@@ -20,7 +20,7 @@ const SignIn = () => {
       const response = await axios.post('http://localhost:5000/login', { email, password });
       localStorage.setItem('token', response.data.token);
       setErrorMessage('');
-      navigate('/MainPage'); 
+      navigate('/ToDoList'); 
     } catch (err) {
       setErrorMessage('Invalid email or password');
     }
