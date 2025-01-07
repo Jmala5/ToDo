@@ -180,7 +180,7 @@ app.delete('/tasks/:id', provjeriToken, async (req, res) => {
     }
 
     // Brisanje zadatka
-    await task.remove();
+    await Task.findByIdAndDelete(req.params.id);
     res.status(204).send();
   } catch (err) {
     res.status(500).send(err.message);
