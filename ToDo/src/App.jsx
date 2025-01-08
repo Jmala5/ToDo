@@ -4,8 +4,9 @@ import SignUp from './page/SignUp.jsx'
 import SignIn from './page/SignIn.jsx'
 import './App.css'
 import TodoList from './page/ToDoList.jsx'; // Import nove komponente
-import MainPage from './page/MainPage';
-//import NextPage from './NextPage'; //anteino
+import MainPage from './page/MainPage.jsx';
+import Schedule from './page/Schedule.jsx'; //anteino
+import Notes from './page/Notes.jsx';
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
          <Route exact path="/SignUp" element={<SignUp />} />
          <Route exact path="/SignIn" element={<SignIn />} />
          <Route exact path="/TodoList" element={<TodoList />} /> {/* Nova ruta */}
-         {/*<Route path="/next-page" component={NextPage} />} //anteino */}
+         <Route exact path="/Schedule" element={<Schedule/>} /> 
+         <Route exact path="/Notes" element={<Notes/>} /> 
+
          <Route exact path="/" element={<MainPage />} />
          
        </Routes>

@@ -57,7 +57,7 @@ function TodoList() {
 
   // Funkcija za preusmjeravanje na sljedeću stranicu
   const navigateToNextPage = () => {
-    navigate('/next-page'); // Putanja za sljedeću stranicu
+    navigate('/Schedule'); // Putanja za sljedeću stranicu
   };
 
   return (

@@ -19,6 +19,9 @@ const db = mongoose.connection;
 db.on('error', (error) => console.error('Greška pri spajanju:', error));
 db.once('open', () => console.log('Spojeni smo na MongoDB bazu'));
 
+
+
+
 const provjeriToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   if (!authHeader) return res.status(403).send('Ne postoji autorizacijsko zaglavlje');
@@ -80,55 +83,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// app.post('/books', provjeriToken, async (req, res) => {
-//   const { title, author, review, readingMethod, rating, favouriteChar, newWords } = req.body;
-//   const userId = req.korisnik.id; 
-
-//   try {
-//     const book = new Book({ title, author, review, readingMethod, rating, favouriteChar, newWords, userId });
-//     const savedBook = await book.save(); 
-//     res.status(201).json(savedBook);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// });
-
-// app.get('/books', provjeriToken, async (req, res) => {
-//   const userId = req.korisnik.id; 
-
-//   try {
-//     const books = await Book.find({ userId }); 
-//     res.json(books);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-// app.delete('/books/:id', provjeriToken, async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     console.log("Usa1")
-//     const book = await Book.findByIdAndDelete(id);
-//     if (!book) {
-//       return res.status(404).json({ message: 'Book not found' });
-//     }
-
-//     if (book.userId.toString() !== req.korisnik.id) {
-//       console.log("Usa2")
-//       return res.status(403).json({ message: 'Unauthorized action' });
-//     }
-
-   
-//     console.log("Usa3")
-//     res.status(200).json({ message: 'Book deleted successfully' });
-//     console.log("Usa4")
-//   } catch (error) {
-    
-//     res.status(500).json({ error: error.message });
-//     console.log("Usa5")
-//   }
-// });
+//Elino
 
 const TaskSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -186,6 +141,109 @@ app.delete('/tasks/:id', provjeriToken, async (req, res) => {
     res.status(500).send(err.message);
   }
 });
+
+
+//Antea
+
+const ScheduleSchema = new mongoose.Schema({
+  name: { type: String, required: false },  // Ako nije potrebno, postavi required: false
+
+  time: { type: String, required: true },  // Provjeri da li je `time` validan
+  description: { type: String, required: true },  // Provjeri da li je `description` validan
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+});
+
+
+const Schedule = mongoose.model('Schedule', ScheduleSchema);
+
+
+// API rute
+// Dohvaćanje rasporeda korisnika
+
+app.get('/schedules', provjeriToken, async (req, res) => {
+  try {
+    // Filtriramo zadatke prema korisničkom ID-u
+    const schedules = await Schedule.find({ userId: req.korisnik.id });
+    res.json(schedules);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+
+//spremanje dijela rasporeda
+
+
+app.post('/schedules', provjeriToken, async (req, res) => {
+  try {
+    console.log('Request body:', req.body); // Log za podatke iz frontenda
+    console.log('User ID:', req.korisnik.id); // Log za korisnički ID iz tokena
+
+    const newSchedule = new Schedule({
+      time: req.body.time,
+      description: req.body.description,
+      userId: req.korisnik.id, // Korisnički ID
+    });
+
+    await newSchedule.save();
+    res.status(201).json(newSchedule);
+  } 
+  catch (err) {
+    console.error('Greška pri dodavanju rasporeda:', err); // Logiraj detaljnu grešku
+    res.status(500).send(err.message);
+  }
+});
+
+//azuriranje rasporeda
+
+app.put('/schedules/:id', async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+
+  console.log('Ažuriranje rasporeda sa ID-jem:', id);
+  console.log('Podaci koje šaljete:', updatedData); // Log za podatke iz frontenda
+
+  try {
+    // Ispravno koristiti model Schedule
+    const updatedSchedule = await Schedule.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (!updatedSchedule) {
+      return res.status(404).json({ message: 'Raspored nije pronađen' });
+    }
+
+    res.status(200).json(updatedSchedule);
+  } catch (error) {
+    console.error('Greška pri ažuriranju rasporeda:', error); // Detaljan ispis greške
+    res.status(500).json({ message: 'Greška pri ažuriranju rasporeda', error });
+  }
+});
+
+
+
+// Brisanje rasporeda
+app.delete('/schedule/:id', provjeriToken, async (req, res) => {
+  try {
+    const schedule = await Schedule.findById(req.params.id);
+
+    // Provjera postoji li taj dio rasporeda
+    if (!schedule) {
+      return res.status(404).json({ message: 'Raspored nije pronađen' });
+    }
+
+    // Provjera vlasništva nad rasporedom
+    if (schedule.userId.toString() !== req.korisnik.id) {
+      return res.status(403).json({ message: 'Nemate dopuštenje za brisanje ovog dijela rasporeda' });
+    }
+
+    // Brisanje dijela rasporeda
+    await Schedule.findByIdAndDelete(req.params.id);
+    res.status(204).send();
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
