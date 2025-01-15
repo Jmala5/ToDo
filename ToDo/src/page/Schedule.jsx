@@ -134,7 +134,7 @@ const handleDeleteZadatak = async (zadatakId) => {
   };
   
 // Preusmjeravanje na sljedeću stranicu
-const navigateToNextPage = () => navigate('/Notes');
+const navigateToNextPage = () => navigate('/GoalsForTheDay');
 
 // Preusmjeravanje na prethodnu stranicu
 const navigateBack = () => navigate('/TodoList');

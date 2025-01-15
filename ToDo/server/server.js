@@ -243,7 +243,87 @@ app.delete('/schedule/:id', provjeriToken, async (req, res) => {
   }
 });
 
+////////////////////////////////////////////////////
+//Anamarijino -Goals For The day 
+////////////////////////////////////////////////////
 
+
+const GoalsSchema=new mongoose.Schema({
+  text: {type: String, required:true},
+  completed: {type:Boolean, default:false},
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+});
+
+const Goal=mongoose.model('Goal', GoalsSchema);
+
+app.get('/goals', provjeriToken, async (req, res) => {
+  try {
+    const goals = await Goal.find({ userId: req.korisnik.id }); // Fetch goals for this user
+    res.status(200).json(goals);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch goals' });
+  }
+});
+
+// Ispunjenost goal-a s provjerom je li već ispunjen
+app.put('/goals/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const goal = await Goal.findById(id);
+
+    if (!goal) {
+      return res.status(404).json({ error: 'Goal not found' });
+    }
+
+    // Provjeri je li goal ispunjen
+    if (goal.completed) {
+      return res.status(400).json({ error: 'Goal is already completed and cannot be marked as not done' });
+    }
+
+    // Označi ga kao ispunjenog
+    goal.completed = true;
+    await goal.save();
+    res.status(200).json(goal);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update goal' });
+  }
+});
+
+
+//dodavanje novog goal
+app.post('/goals',provjeriToken, async(req, res)=>{
+  //dodajemo novi goal povezan s Id-em
+  try{
+
+    const newGoal=new Goal({
+      text: req.body.text,
+      userId:req.korisnik.id,
+  });
+  await newGoal.save();
+  res.status(201).json(newGoal);
+  }catch(err){
+    res.status(500).send(err.message);
+  }
+ 
+});
+
+//ispunjenje goal-a
+app.put('/goals/:id', async(req,res)=>{
+  const {id}= req.params;
+
+  try{
+    const goal=await Goal.findById(id);
+    if(!goal){
+      return res.status(404).json({error:'Goal not found'});
+    }
+    goal.completed=!goal.completed;
+    await goal.save();
+    res.status(200).json(goal);
+  }catch(err){
+    res.status(500).json({error:'Fail to update goal'});
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
