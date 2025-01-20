@@ -18,6 +18,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/ToDo', {
 const db = mongoose.connection;
 db.on('error', (error) => console.error('Greška pri spajanju:', error));
 db.once('open', () => console.log('Spojeni smo na MongoDB bazu'));
+const PORT = 5000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
 
 
@@ -325,7 +327,36 @@ app.put('/goals/:id', async(req,res)=>{
   }
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+
+
+//NOTES DIO
+
+// Get the user's single note
+app.get('/notes', provjeriToken, async (req, res) => {
+  try {
+      const note = await Note.findOne({ userId: req.korisnik.id }); // Fetch only one note
+      res.status(200).json(note ? [note] : []); // Return as array for frontend compatibility
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
+
+// Add a note (ensures only one note exists)
+app.post('/notes', provjeriToken, async (req, res) => {
+  try {
+      const existingNote = await Note.findOne({ userId: req.korisnik.id });
+      if (existingNote) {
+          return res.status(400).json({ message: 'A note already exists. Update or delete it first.' });
+      }
+
+      const newNote = new Note({
+          text: req.body.text,
+          userId: req.korisnik.id,
+      });
+
+      await newNote.save();
+      res.status(201).json(newNote);
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
 });
