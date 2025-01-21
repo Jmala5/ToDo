@@ -1,66 +1,83 @@
 /* Pozadinska slika i osnovni stilovi */
+
+@import url('https://fonts.googleapis.com/css2?family=Apricot&family=Scripter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Shadows+Into+Light&display=swap');
+
+/* Glavni stilovi */
 .main-page {
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4); /* Poluprozirni tamni overlay za bolji kontrast */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .content {
-    text-align: center;
-    color: white;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-  }
-  
-  .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .btn {
-    padding: 15px 30px;
-    font-size: 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-  
-  .btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-3px);
-  }
-  
-  .btn:active {
-    transform: translateY(1px);
-  }
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex; /* Koristi flexbox */
+  justify-content: center; /* Centriranje sadržaja horizontalno */
+  align-items: center; /* Centriranje sadržaja vertikalno */
+  overflow: hidden; /* Osigurava da se ništa ne prelijeva izvan stranice */
+
+}
+
+/* Zamućena pozadina */
+.main-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url('https://img.freepik.com/premium-photo/notepads-cellphone-coffee_700248-24814.jpg?w=826'); /* Put do slike */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: blur(8px); /* Zamućenje pozadine */
+  z-index: -1; /* Stavlja pozadinu iza sadržaja */
+}
+
+/* Prozirni sloj za dodatni kontrast */
+.overlay {
+  position: relative;
+  background-color: rgba(237, 233, 227, 0.8); /* Prozirna pozadina */
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Stilovi za sadržaj */
+.content h1 {
+  font-size: 4.5rem;
+  color: #D4B2A7;
+  font-family: 'Acme';
+  margin-bottom: 10px;
+}
+
+.content p {
+  font-size: 3rem;
+  color: #A38F85;
+  font-family: 'Shadows Into Light';
+  margin-bottom: 30px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 2.8rem;
+  font-family: 'Cormorant';
+  background-color: #D7A49A;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #E4C9B6;
+  transform: translateY(-3px);
+}
+.btn:active {
+  transform: translateY(1px);
+}
