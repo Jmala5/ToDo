@@ -56,9 +56,10 @@ function TodoList() {
   };
 
   // Funkcija za preusmjeravanje na sljedeću stranicu
-  const navigateToNextPage = () => {
+  /*const navigateToNextPage = () => {
     navigate('/Schedule'); // Putanja za sljedeću stranicu
-  };
+  };*/
+  const navigateBack = () => navigate('/Dashboard');
 
   return (
     <div style={{ textAlign: 'center', marginTop: '2rem' }}>
@@ -95,7 +96,7 @@ function TodoList() {
 
       {/* Strelica za navigaciju u desnom donjem kutu */}
       <button 
-        onClick={navigateToNextPage}
+        onClick={navigateBack}
         style={{
           position: 'fixed',
           bottom: '20px',
@@ -110,7 +111,7 @@ function TodoList() {
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
         }}
       >
-        ➔
+        🠄
       </button>
     </div>
   );

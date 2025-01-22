@@ -134,10 +134,10 @@ const handleDeleteZadatak = async (zadatakId) => {
   };
   
 // Preusmjeravanje na sljedeću stranicu
-const navigateToNextPage = () => navigate('/GoalsForTheDay');
+//const navigateToNextPage = () => navigate('/GoalsForTheDay');
 
 // Preusmjeravanje na prethodnu stranicu
-const navigateBack = () => navigate('/TodoList');
+const navigateBack = () => navigate('/Dashboard');
 
   return (
     <div className="schedule-container">
@@ -186,9 +186,7 @@ const navigateBack = () => navigate('/TodoList');
       </table>
 
       {/* Strelica za navigaciju */}
-      <button onClick={navigateToNextPage} className="next-page-button">
-        🠆
-      </button>
+
       <button onClick={navigateBack} className="previous-page-button">
         🠄
       </button>
