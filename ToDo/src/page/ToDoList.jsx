@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Koristimo useNavigate umjesto useHistory
+import { useNavigate } from 'react-router-dom';
+import '../styles/ToDoList.css'; 
 
 function TodoList() {
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState('');
-  const navigate = useNavigate(); // Koristimo navigate za preusmjeravanje
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  // Dohvati zadatke s backenda
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:5000/tasks', {
-          headers: { Authorization: `Bearer ${token}` }, 
+          headers: { Authorization: `Bearer ${token}` },
         });
         setTasks(response.data);
       } catch (error) {
@@ -23,31 +24,30 @@ function TodoList() {
     fetchTasks();
   }, []);
 
-  // Dodaj zadatak
   const addTask = async () => {
     if (task.trim() === '') {
-      alert('You must write something!');
+      setError('Task cannot be empty');
       return;
     }
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/tasks', 
-        { name: task }, 
-        { headers: { Authorization: `Bearer ${token}` } } 
+      const response = await axios.post('http://localhost:5000/tasks',
+        { name: task },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       setTasks([...tasks, response.data]);
       setTask('');
+      setError('');
     } catch (error) {
       console.error('Error adding task:', error);
     }
   };
 
-  // Izbriši zadatak
   const removeTask = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/tasks/${id}`, { 
-        headers: { Authorization: `Bearer ${token}` }, 
+      await axios.delete(`http://localhost:5000/tasks/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(tasks.filter((t) => t._id !== id));
     } catch (error) {
@@ -55,64 +55,36 @@ function TodoList() {
     }
   };
 
-  // Funkcija za preusmjeravanje na sljedeću stranicu
-  /*const navigateToNextPage = () => {
-    navigate('/Schedule'); // Putanja za sljedeću stranicu
-  };*/
   const navigateBack = () => navigate('/Dashboard');
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-      <h2>To-Do List</h2>
-      <input
-        type="text"
-        value={task}
-        onChange={(e) => setTask(e.target.value)}
-        placeholder="Enter a task"
-        style={{ padding: '0.5rem', marginRight: '0.5rem' }}
-      />
-      <button onClick={addTask} style={{ padding: '0.5rem' }}>Add Task</button>
-      <ul style={{ listStyle: 'none', padding: 0, marginTop: '1rem' }}>
-        {tasks.map((t) => (
-          <li
-            key={t._id}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '0.5rem',
-              padding: '0.5rem',
-              border: '1px solid #ccc',
-              borderRadius: '5px',
-            }}
-          >
-            {t.name}
-            <button onClick={() => removeTask(t._id)} style={{ marginLeft: '1rem', cursor: 'pointer' }}>
-              ×
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      {/* Strelica za navigaciju u desnom donjem kutu */}
-      <button 
-        onClick={navigateBack}
-        style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          fontSize: '30px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '50%',
-          padding: '15px',
-          cursor: 'pointer',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-        }}
-      >
-        🠄
-      </button>
+    <div className="todo-page">
+      <div className="todo-overlay">
+        <h2 className="todo-header">To-Do List</h2>
+        <ul className="todo-list">
+          {tasks.map((t) => (
+            <li key={t._id} className="todo-item">
+              <span>{t.name}</span>
+              <button onClick={() => removeTask(t._id)} className="delete-task">
+                ×
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="add-task-form">
+          <input
+            type="text"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            placeholder="Unesi zadatak"
+          />
+          {error && <p className="error-message">{error}</p>}
+          <button onClick={addTask}>Dodaj zadatak</button>
+        </div>
+        <button onClick={navigateBack} className="previous-page-button">
+          🠄 Back
+        </button>
+      </div>
     </div>
   );
 }
