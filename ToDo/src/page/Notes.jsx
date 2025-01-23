@@ -64,7 +64,7 @@ function Notes() {
 
     // Navigate to the previous page
     const navigateToNavigation = () => {
-        window.location.href = '/navigation'; // Replace with your actual navigation route
+        window.location.href = '/Dashboard'; // Replace with your actual navigation route
     };
 
     return (
@@ -115,7 +115,11 @@ function Notes() {
                 </div>
             )}
             <div style={styles.navigation}>
-                <button onClick={navigateToNavigation} style={styles.navButton}>Izbornik</button>
+                <button onClick={navigateToNavigation} style={styles.navButton}>
+             
+                 🠄
+      
+                </button>
             </div>
         </div>
     );

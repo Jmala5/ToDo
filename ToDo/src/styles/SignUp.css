@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Apricot&family=Scripter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Acme&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Shadows+Into+Light&display=swap');
 
-
 .signup {
     text-align: center;
     position: relative;
@@ -9,13 +8,13 @@
     width: 100vw;
     display: flex; /* Koristi flexbox */
     justify-content: center; /* Centriranje sadržaja horizontalno */
-    align-items: center; /* Centriranje sadržaja vertikalno */
-    overflow: hidden; /* Osigurava da se ništa ne prelijeva izvan stranice*/
-  }
+    align-items: flex-start; /* Centriranje sadržaja vertikalno */
+    overflow: auto; /* Osigurava da se ništa ne prelijeva izvan stranice */
+}
 
-  .signup::before {
+.signup::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
@@ -24,71 +23,82 @@
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    filter: blur(8px); /* Zamućenje pozadine */
+    filter: blur(4px); /* Zamućenje pozadine */
     z-index: -1; /* Stavlja pozadinu iza sadržaja */
-  }
-  
-  /* Prozirni sloj za dodatni kontrast */
-  .overlay {
+}
+
+/* Prozirni sloj za dodatni kontrast */
+.overlay {
     position: relative;
-    background-color: rgba(237, 233, 227, 0.8); /* Prozirna pozadina */
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center center;
+    width: 500px;
+    margin: 20px auto;
+    background-color: rgba(215, 192, 156, 0.8); /* Prozirna pozadina */
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .content h1 {
-    font-size: 4.5rem;
+    font-size: 1.5rem; 
+}
+
+/* Smanjeni font za sve tekstualne elemente unutar .overlay */
+.signup .overlay h1 {
+    font-size: 2.7rem !important; /* Manji font za h1 */
+
     color: #D4B2A7;
     font-family: 'Acme';
     margin-bottom: 10px;
-  }
-  
-  .options {
+}
+
+.signup .overlay p {
+    font-size: 1.3rem; /* Manji font za paragrafe */
+    color: #D7A49A;
+    font-family: 'Shadows Into Light' bold;
+    margin-bottom: 0px;
+}
+
+.options {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
-  }
-  .content p {
-    font-size: 3.5rem;
-    color: #A38F85;
-    font-family: 'Shadows Into Light';
-    margin-bottom: 30px;
-  }
+}
 
-  .signup-form {
+.signup-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
-  }
-  
-  .form-group label {
-    font-size: 2rem;
+}
+
+.signup .form-group label {
+    font-size: 1.5rem;
     color: #333;
     font-family: 'Cormorant', serif;
     display: block;
     margin-bottom: 10px;
-  }
+}
 
-  .form-group input {
+.signup .form-group input {
     width: 100%;
     padding: 5px;
-    border-radius: 10px;
-    color: #A38F85;
+    border-radius: 5px;
+    background-color: antiquewhite;
+    color: black;
     border: 1px solid #ccc;
-    font-size: 2.5rem;
-  }
-  
-  .error-message {
+    font-size: 1.5rem;
+    font-family: 'Cormorant', serif;
+
+}
+
+
+
+.error-message {
     color: red;
     font-size: 1rem;
-  }
-  
-  .option-btn {
+}
+
+.signup .option-btn {
     padding: 15px 30px;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-family: 'Cormorant';
     color: #fff;
     background-color: #A4B1BA;
@@ -96,9 +106,8 @@
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .option-btn:hover {
+}
+
+.option-btn:hover {
     background-color: #D7A49A;
-  }
-  
+}
