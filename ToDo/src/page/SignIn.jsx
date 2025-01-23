@@ -1,6 +1,79 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/SignIn.css'; // Uvoz CSS datoteke
+
+const SignIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!email || !password) {
+      setErrorMessage('Both fields are required');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/login', { email, password });
+      localStorage.setItem('token', response.data.token);
+      setErrorMessage('');
+      navigate('/dashboard');
+    } catch (err) {
+      setErrorMessage('Invalid email or password');
+    }
+  };
+
+  return (
+    <div className="signin">
+      <div className="overlay">
+        <div className='content'>
+        <h1>Prijava</h1>
+        <p>Dobrodošli natrag! Molim Vas prijavite se da bi nastavili.</p>
+        <form onSubmit={handleSubmit} className="signin-form">
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+         
+          <div className="form-group">
+            <label>Lozinka:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <button type="submit" className="option-btn">Prijava</button>
+        </form>
+      </div>
+    </div>
+     </div>
+  );
+};
+
+export default SignIn;
+
+
+
+
+
+
+
+/*import  { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../styles/SignIn.css'; // Dodajte odgovarajući CSS
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +93,7 @@ const SignIn = () => {
       const response = await axios.post('http://localhost:5000/login', { email, password });
       localStorage.setItem('token', response.data.token);
       setErrorMessage('');
-      navigate('/ToDoList'); 
+      navigate('/Dashboard'); 
     } catch (err) {
       setErrorMessage('Invalid email or password');
     }
@@ -69,4 +142,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignIn;*/

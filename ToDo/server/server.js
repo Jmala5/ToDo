@@ -331,32 +331,76 @@ app.put('/goals/:id', async(req,res)=>{
 
 //NOTES DIO
 
-// Get the user's single note
+// Define NoteSchema and routes inline
+const NoteSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+});
+
+const Note = mongoose.model('Note', NoteSchema);
+
+// API routes for Notes
+// Get all notes for the authenticated user
 app.get('/notes', provjeriToken, async (req, res) => {
   try {
-      const note = await Note.findOne({ userId: req.korisnik.id }); // Fetch only one note
-      res.status(200).json(note ? [note] : []); // Return as array for frontend compatibility
+    const notes = await Note.find({ userId: req.korisnik.id });
+    res.status(200).json(notes);
   } catch (error) {
-      res.status(500).send(error.message);
+    res.status(500).send(error.message);
   }
 });
 
-// Add a note (ensures only one note exists)
+// Add a new note
 app.post('/notes', provjeriToken, async (req, res) => {
   try {
-      const existingNote = await Note.findOne({ userId: req.korisnik.id });
-      if (existingNote) {
-          return res.status(400).json({ message: 'A note already exists. Update or delete it first.' });
-      }
-
-      const newNote = new Note({
-          text: req.body.text,
-          userId: req.korisnik.id,
-      });
-
-      await newNote.save();
-      res.status(201).json(newNote);
+    const newNote = new Note({
+      text: req.body.text,
+      userId: req.korisnik.id,
+    });
+    await newNote.save();
+    res.status(201).json(newNote);
   } catch (error) {
-      res.status(500).send(error.message);
+    res.status(500).send(error.message);
+  }
+});
+
+// Update a note
+app.put('/notes/:id', provjeriToken, async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+
+    if (!note) {
+      return res.status(404).json({ message: 'Note not found' });
+    }
+
+    if (note.userId.toString() !== req.korisnik.id) {
+      return res.status(403).json({ message: 'Unauthorized to update this note' });
+    }
+
+    note.text = req.body.text || note.text;
+    await note.save();
+    res.status(200).json(note);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Delete a note
+app.delete('/notes/:id', provjeriToken, async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+
+    if (!note) {
+      return res.status(404).json({ message: 'Note not found' });
+    }
+
+    if (note.userId.toString() !== req.korisnik.id) {
+      return res.status(403).json({ message: 'Unauthorized to delete this note' });
+    }
+
+    await Note.findByIdAndDelete(req.params.id);
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 });

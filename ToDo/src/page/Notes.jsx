@@ -8,6 +8,11 @@ function Notes() {
 
     // Fetch the note for the user
     useEffect(() => {
+        // Reset state when component mounts
+        setNote(null);
+        setText('');
+        setIsEditing(false);
+
         axios.get('http://localhost:5000/notes', {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
@@ -18,7 +23,7 @@ function Notes() {
                 }
             })
             .catch(err => console.error(err));
-    }, []);
+    }, []); // Empty dependency array ensures this runs only on mount.
 
     // Add or update the note
     const saveNote = () => {
@@ -58,12 +63,13 @@ function Notes() {
     };
 
     // Navigate to the previous page
-    const navigateBack = () => {
-        window.history.back();
+    const navigateToNavigation = () => {
+        window.location.href = '/navigation'; // Replace with your actual navigation route
     };
 
     return (
         <div style={styles.container}>
+            <div style={styles.backgroundImage} />
             <div style={styles.notesContainer}>
                 <div style={styles.header}>NOTES</div>
                 {note ? (
@@ -109,117 +115,138 @@ function Notes() {
                 </div>
             )}
             <div style={styles.navigation}>
-                <button onClick={navigateBack} style={styles.navButton}>Previous Page</button>
+                <button onClick={navigateToNavigation} style={styles.navButton}>Izbornik</button>
             </div>
         </div>
     );
 }
 
 const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    width: '100vw',
-    backgroundColor: '#E1DAD3',
-  },
-  notesContainer: {
-    width: '90%',
-    maxWidth: '900px',
-    height: '80%', // Occupy most of the screen height
-    backgroundColor: '#E4C9B6',
-    borderRadius: '12px',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '20px', // Add padding for proper spacing
-    overflow: 'hidden', // Ensure no overflowing outside
-  },
-  header: {
-    backgroundColor: '#D7A49A',
-    color: '#FFF',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: '24px',
-    padding: '15px',
-    marginBottom: '10px', // Add space below header
-  },
-  editContainer: {
-    flex: 1, // Take remaining space
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  textArea: {
-    flex: 1, // Occupy remaining vertical space
-    width: '96.5%',
-    padding: '15px',
-    borderRadius: '8px',
-    border: '1px solid #A4B1BA',
-    fontSize: '18px',
-    backgroundColor: '#A4B1BA', // Use one of the suggested colors
-    color: '#FFF',
-    resize: 'none', // Disable resizing
-    overflowY: 'auto', // Add scroll for long text
-    marginBottom: '10px', // Space between textarea and buttons
-  },
-  noteDisplay: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    overflow: 'hidden', // Hide overflowing content
-    padding: '10px',
-  },
-  scrollableText: {
-    flex: 1,
-    overflowY: 'auto', // Scroll for long text
-    maxHeight: '400px', // Constrain height for scrolling
-    padding: '10px',
-  },
-  noteText: {
-    fontSize: '18px',
-    color: '#333',
-    whiteSpace: 'pre-wrap', // Preserve line breaks
-  },
-  buttonGroup: {
-    display: 'flex',
-    justifyContent: 'space-between', // Spread buttons apart
-    gap: '10px',
-  },
-  button: {
-    backgroundColor: '#D7A49A',
-    color: '#FFF',
-    padding: '12px 20px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-  controlButtons: {
-    marginTop: '10px',
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
-  },
-  navigation: {
-    marginTop: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  navButton: {
-    backgroundColor: '#A4B1BA',
-    color: '#FFF',
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    fontSize: '16px',
-  },
+    container: {
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        width: '100vw',
+        overflow: 'hidden',
+        fontFamily: `'Acme', sans-serif`, // Default font
+    },
+    backgroundImage: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundImage: 'url(https://images.unsplash.com/photo-1734613414358-66038a779fed?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        filter: 'blur(5px)', // Adjust blur intensity
+        zIndex: -1, // Keep background behind content
+    },
+    notesContainer: {
+        width: '90%',
+        maxWidth: '900px',
+        height: '80%',
+        backgroundColor: '#E4C9B6',
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '20px',
+        overflow: 'hidden',
+        fontFamily: `'Cormorant', serif`, // Specific font
+    },
+    header: {
+        backgroundColor: '#D7A49A',
+        color: '#FFF',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: '24px',
+        padding: '15px',
+        marginBottom: '10px',
+        fontFamily: `'Shadows Into Light', cursive`, // Specific font
+    },
+    editContainer: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    textArea: {
+        flex: 1,
+        width: '96.5%',
+        padding: '15px',
+        borderRadius: '8px',
+        border: '1px solid #A4B1BA',
+        fontSize: '18px',
+        backgroundColor: '#A4B1BA',
+        color: '#FFF',
+        resize: 'none',
+        overflowY: 'auto',
+        marginBottom: '10px',
+        fontFamily: `'Cormorant', serif`, // Specific font
+    },
+    noteDisplay: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        overflow: 'hidden',
+        padding: '10px',
+        fontFamily: `'Cormorant', serif`, // Specific font
+    },
+    scrollableText: {
+        flex: 1,
+        overflowY: 'auto',
+        maxHeight: '400px',
+        padding: '10px',
+    },
+    noteText: {
+        fontSize: '18px',
+        color: '#333',
+        whiteSpace: 'pre-wrap',
+        fontFamily: `'Shadows Into Light', cursive`, // Specific font
+    },
+    buttonGroup: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: '10px',
+    },
+    button: {
+        backgroundColor: '#D7A49A',
+        color: '#FFF',
+        padding: '12px 20px',
+        border: 'none',
+        borderRadius: '8px',
+        fontWeight: 'bold',
+        cursor: 'pointer',
+        fontSize: '16px',
+        fontFamily: `'Acme', sans-serif`, // Specific font
+    },
+    controlButtons: {
+        marginTop: '10px',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '10px',
+    },
+    navigation: {
+        position: 'absolute',
+        bottom: '20px',
+        left: '20px',
+    },
+    navButton: {
+        backgroundColor: '#A4B1BA',
+        color: '#FFF',
+        padding: '12px 20px',
+        border: 'none',
+        borderRadius: '50%', // Makes the button round
+        cursor: 'pointer',
+        fontWeight: 'bold',
+        fontSize: '16px',
+        fontFamily: `'Acme', sans-serif`, // Specific font
+    },
 };
 
 export default Notes;

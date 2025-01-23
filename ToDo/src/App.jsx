@@ -8,6 +8,7 @@ import MainPage from './page/MainPage.jsx';
 import Schedule from './page/Schedule.jsx'; //anteino
 import Notes from './page/Notes.jsx';
 import GoalsForTheDay from './page/GoalsForTheDay.jsx';
+import Dashboard from './page/Dashboard.jsx';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
          <Route exact path="/Schedule" element={<Schedule/>} /> 
          <Route exact path="/Notes" element={<Notes/>} /> 
          <Route exact path="/GoalsForTheDay" element={<GoalsForTheDay/>} />
-
+         <Route path="/Dashboard" element={<Dashboard />} />
          <Route exact path="/" element={<MainPage />} />
          
        </Routes>

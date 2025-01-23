@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Apricot&family=Scripter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Shadows+Into+Light&display=swap');
+
+.goals-page {
+  /*text-align: center;*/
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+.goals-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url('https://plus.unsplash.com/premium_photo-1682309772037-8da49abb2b84?q=80&w=1824&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Put do slike */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(10px);
+  z-index: -1;
+}
+
+.goals-overlay {
+  position: relative;
+  background-color: rgba(237, 233, 227, 0.85);
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  width: 90%;
+  max-width: 500px;
+}
+
+.goals-header {
+  font-size: 2.8rem;
+  color: #A38F85;
+  font-family: 'Acme', sans-serif;
+  margin-bottom: 20px;
+}
+
+.goals-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 60vh;
+  overflow-y: auto; /*omogućuje scroll unutar liste*/
+}
+
+.goals-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #F8D7DA;
+  border-radius: 10px;
+  font-family: 'Shadows Into Light', cursive;
+  font-size: 2.3rem;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.goals-item.completed {
+  background-color: #D4EDDA;
+  text-decoration: line-through;
+}
+
+.add-goal-form {
+  margin-top: 20px;
+}
+
+.add-goal-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1.7rem;
+  margin-bottom: 10px;
+}
+
+.add-goal-form button {
+  padding: 15px 30px;
+  font-size: 2.2rem;
+  font-family: 'Cormorant';
+  color: #fff;
+  background-color: #A4B1BA;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-goal-form button:hover {
+  background-color: #D7A49A;
+}
+
+.error-message {
+  color: red;
+  font-size: 1rem;
+}
+
+.previous-page-button {
+  margin-top: 20px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.previous-page-button:hover {
+  color: #D4B2A7;
+}

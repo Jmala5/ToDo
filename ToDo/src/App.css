@@ -1,6 +1,11 @@
 #root {
   max-width: 1280px;
+<<<<<<< HEAD
   margin: 0 auto;
+=======
+  margin: 0 0;
+  padding: 0;
+>>>>>>> main
   text-align: center;
 }
 
