@@ -81,9 +81,11 @@ function TodoList() {
           {error && <p className="error-message">{error}</p>}
           <button onClick={addTask}>Dodaj zadatak</button>
         </div>
+        
+
         <button onClick={navigateBack} className="previous-page-button">
-          🠄 Back
-        </button>
+        🠄
+      </button>
       </div>
     </div>
   );

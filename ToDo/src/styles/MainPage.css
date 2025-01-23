@@ -27,30 +27,32 @@
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  filter: blur(8px); /* Zamućenje pozadine */
+  filter: blur(2px); /* Zamućenje pozadine */
   z-index: -1; /* Stavlja pozadinu iza sadržaja */
 }
 
 /* Prozirni sloj za dodatni kontrast */
-.overlay {
+.main-page .overlay {
+
+  width: 700px;
   position: relative;
   background-color: rgba(237, 233, 227, 0.8); /* Prozirna pozadina */
-  padding: 20px;
+  padding: 30px;
   border-radius: 15px;
-  text-align: center center;
+  text-align:  center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Stilovi za sadržaj */
-.content h1 {
-  font-size: 4.5rem;
+.main-page .content h1 {
+  font-size: 3.5rem !important;
   color: #D4B2A7;
   font-family: 'Acme';
   margin-bottom: 10px;
 }
 
-.content p {
-  font-size: 3rem;
+.main-page .content p {
+  font-size: 1.5rem !important ;
   color: #A38F85;
   font-family: 'Shadows Into Light';
   margin-bottom: 30px;
@@ -64,7 +66,7 @@
 
 .btn {
   padding: 10px 20px;
-  font-size: 2.8rem;
+  font-size: 2rem !important;
   font-family: 'Cormorant';
   background-color: #D7A49A;
   color: #FFFFFF;

@@ -51,6 +51,7 @@ const SignUp = () => {
     <div className="signup">
       <div className="overlay">
         <h1 className="content"> <h1>Registracija</h1></h1>
+        <br></br>
         <form className="signup-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Korisničko ime:</label>
@@ -99,7 +100,8 @@ const SignUp = () => {
           </button>
         </form>
         <p>
-          Već imate račun? <Link to="/SignIn" style={{ color: '#D7A49A' }}><p>Prijavite se ovdje</p></Link>.
+          <p style={{ color: '#333' }}>Već imate račun?</p>
+          <Link to="/SignIn" style={{ color: '#D7A49A' }}><p>Prijavite se ovdje</p></Link>.
         </p>
       </div>
     </div>

@@ -24,7 +24,7 @@
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    filter: blur(8px); /* Zamućenje pozadine */
+    filter: blur(4px); /* Zamućenje pozadine */
     z-index: -1; /* Stavlja pozadinu iza sadržaja */
   }
   
@@ -38,21 +38,21 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
   
-  .content h1 {
-    font-size: 4.5rem;
+  .signin .content h1 {
+    font-size: 2.8rem;
     color: #D4B2A7;
     font-family: 'Acme';
     margin-bottom: 10px;
   }
   
-  .options {
+  .signin .options {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
   }
-  .content p {
-    font-size: 3.5rem;
+  .signin .content p {
+    font-size: 1.5rem;
     color: #A38F85;
     font-family: 'Shadows Into Light';
     margin-bottom: 30px;
@@ -65,7 +65,7 @@
   }
   
   .form-group label {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #333;
     font-family: 'Cormorant', serif;
     display: block;
@@ -76,9 +76,11 @@
     width: 100%;
     padding: 5px;
     border-radius: 10px;
-    color: #A38F85;
+    color: black;
+    background-color: antiquewhite;
     border: 1px solid #ccc;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
+    font-family: 'Cormorant', serif;
   }
   
   .error-message {
@@ -86,9 +88,9 @@
     font-size: 1rem;
   }
   
-  .option-btn {
+  .signin .option-btn {
     padding: 15px 30px;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-family: 'Cormorant';
     color: #fff;
     background-color: #A4B1BA;

@@ -1,58 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Apricot&family=Scripter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Shadows+Into+Light&display=swap');
+
+.schedule-page {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Aligns the container to the top of the page */
+  overflow: auto;
+}
+
+.schedule-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url(C:\Users\Lenovo\Desktop\PROJEKT\ToDo\ToDo\src\assets\images\pozadinaRaspored.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(5px);
+  z-index: -1;
+}
+
 .schedule-container {
-    padding: 20px;
-    width: 130%;
-    color: black;
-    background-color: rgb(231, 228, 225);
-  }
-  
-  .schedule-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .schedule-table th, .schedule-table td {
-    border: 3px solid #d8885c;
-    text-align: center;
-  }
-  
-  .schedule-table input {
-    width: 90%;
-    padding: 4px;
-  }
-  
-  .schedule-table button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    margin: 0 5px;
-    color: black;
-  }
-  
-  .next-page-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-size: 30px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    padding: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  .previous-page-button {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    font-size: 30px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    padding: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
+  padding: 40px;
+  width: 90%;
+  max-width: 850px;
+  margin: 20px auto;
+  background-color: rgba(237, 233, 227, 0.85);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  font-family: 'Cormorant', serif;
+  position: relative;
+  z-index: 1;
+  overflow: auto;
+  margin-top: 120px; /* Spacing to account for sticky header */
+}
+
+.schedule-header {
+  position: sticky;
+  top: 0;
+  background-color: rgba(237, 233, 227, 0.9);
+  padding: 15px;
+  text-align: center;
+  font-size: 2rem;
+  font-family: 'Acme', sans-serif;
+  z-index: 2; /* Ensures the header stays on top */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.schedule-table th, .schedule-table td {
+  border: 2px solid #D4B2A7;
+  text-align: center;
+  padding: 15px;
+  font-size: 1.8rem;
+  color: #333;
+  font-family: 'Shadows Into Light', cursive;
+  background-color: #F8D7DA;
+  border-radius: 5px;
+}
+
+.schedule-table th {
+  background-color: #A4B1BA;
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: 'Acme', sans-serif;
+}
+
+.schedule-table input {
+  width: 90%;
+  padding: 8px;
+  color: black;
+  background-color: antiquewhite;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  font-family: 'Cormorant', serif;
+}
+
+.schedule-table button {
+  background: #A4B1BA;
+  border: none;
+  cursor: pointer;
+  font-size: 1.8rem;
+  margin: 0 3px;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: 'Cormorant', serif;
+  transition: background-color 0.3s ease;
+}
+
+.schedule-table button:hover {
+  background-color: #D7A49A;
+}
+
+.next-page-button, .previous-page-button {
+  position: fixed;
+  bottom: 20px;
+  font-size: 2rem;
+  background-color: #A4B1BA;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Acme', sans-serif;
+}
+
+.next-page-button {
+  right: 20px;
+}
+
+.previous-page-button {
+  left: 20px;
+}
+
+.next-page-button:hover, .previous-page-button:hover {
+  background-color: #D7A49A;
+}
+
+.schedule-container h1 {
+  color: #ebaeb3;
+  text-align: center;
+  font-size: 2.8rem;
+}

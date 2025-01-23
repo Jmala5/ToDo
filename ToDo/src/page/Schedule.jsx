@@ -140,50 +140,52 @@ const handleDeleteZadatak = async (zadatakId) => {
 const navigateBack = () => navigate('/Dashboard');
 
   return (
-    <div className="schedule-container">
-      <h1>Schedule for Today</h1>
-      <table className="schedule-table">
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {scheduleData.map(item => {
-            const task = schedule.find(task => task.time === item.time);
-            return (
-              <tr key={item.time}>
-                <td>{item.time}</td>
-                <td>
-                <input
-                    type="text"
-                    value={scheduleData.find((dataItem) => dataItem.time === item.time)?.description || ''}
-                    onChange={(e) => {
-                      const newDescription = e.target.value;
-                      setScheduleData(scheduleData.map((dataItem) =>
-                        dataItem.time === item.time ? { ...dataItem, description: newDescription } : dataItem
-                      ));
-                    }}
-                    placeholder={task ? task.description : ''}
-                    />
+    <div className="schedule-page">
+
+      <div className="schedule-container">
+        <h1>Schedule for Today</h1>
+        <table className="schedule-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {scheduleData.map(item => {
+              const task = schedule.find(task => task.time === item.time);
+              return (
+                <tr key={item.time}>
+                  <td>{item.time}</td>
+                  <td>
+                  <input
+                      type="text"
+                      value={scheduleData.find((dataItem) => dataItem.time === item.time)?.description || ''}
+                      onChange={(e) => {
+                        const newDescription = e.target.value;
+                        setScheduleData(scheduleData.map((dataItem) =>
+                          dataItem.time === item.time ? { ...dataItem, description: newDescription } : dataItem
+                        ));
+                      }}
+                      placeholder={task ? task.description : ''}
+                      />
 
 
 
 
-                </td>
-                <td>
-                  <button onClick={() => handleZadatak(item.time, item.description)} title="Save">💾</button>
-                  {task && task._id && (
-                    <button onClick={() => handleDeleteZadatak(task._id)} title="Delete">🗑️</button>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                  </td>
+                  <td>
+                    <button onClick={() => handleZadatak(item.time, item.description)} title="Save">💾</button>
+                    {task && task._id && (
+                      <button onClick={() => handleDeleteZadatak(task._id)} title="Delete">🗑️</button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
 
       {/* Strelica za navigaciju */}
 
@@ -191,7 +193,7 @@ const navigateBack = () => navigate('/Dashboard');
         🠄
       </button>
 
-
+      </div>
     </div>
   );
 }
